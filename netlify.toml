@@ -8,6 +8,6 @@
   publish = "build/"
 
   # Default build command.
-  command = "server-start"
+  command = "npm run server-start"
 
  
