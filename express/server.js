@@ -3,9 +3,9 @@ const app = express();
 const path = require("path");
 const serverless = require("serverless-http");
 const fs = require("fs");
-const router = express.Router();
+// const router = express.Router();
 
-router.get("/", function(request, response) {
+app.get("/", function(request, response) {
   console.log("Home page visited!");
   const filePath = path.resolve(__dirname, "../build", "index.html");
   fs.readFile(filePath, "utf8", function(err, data) {
@@ -19,9 +19,9 @@ router.get("/", function(request, response) {
   });
 });
 
-router.get("/about", function(request, response) {
+app.get("/about", function(request, response) {
   console.log("About page visited!");
-  const filePath = path.resolve(__dirname, "./build", "index.html");
+  const filePath = path.resolve(__dirname, "../build", "index.html");
   fs.readFile(filePath, "utf8", function(err, data) {
     if (err) {
       return console.log(err);
@@ -33,9 +33,9 @@ router.get("/about", function(request, response) {
   });
 });
 
-router.get("/contact", function(request, response) {
+app.get("/contact", function(request, response) {
   console.log("Contact page visited!");
-  const filePath = path.resolve(__dirname, "./build", "index.html");
+  const filePath = path.resolve(__dirname, "../build", "index.html");
   fs.readFile(filePath, "utf8", function(err, data) {
     if (err) {
       return console.log(err);
@@ -47,13 +47,14 @@ router.get("/contact", function(request, response) {
   });
 });
 
-router.use(express.static(path.resolve(__dirname, "./build")));
+app.use(express.static(path.resolve(__dirname, "../build")));
 
-// app.use('/.netlify/functions/server', router);
+// app.use('/.netlify/functions/server', app);
 
-router.get("*", function(request, response) {
+app.get("*", function(request, response) {
   const filePath = path.resolve(__dirname, "../build", "index.html");
   response.sendFile(filePath);
 });
 
 module.exports = app;
+module.exports.handler = serverless(app);
