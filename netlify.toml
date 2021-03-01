@@ -8,6 +8,6 @@
   publish = "build/"
 
   # Default build command.
-  command = "node server.js"
+  command = "server-start"
 
  
